@@ -15,8 +15,9 @@ public class RodarTesteMiC1 {
     
     /**
      * @param args the command line arguments
+     * Para rodar estes testes, descomente o metodo principal
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println("mic1");
         int[] tes = new int[2];
         tes[0] = 1;
@@ -31,7 +32,7 @@ public class RodarTesteMiC1 {
                 System.out.print(" : ");
                 System.out.println(ula[i][j]);
             }
-        }*/
+        }
         //teste de acesso ao armazenamento de controle
         String[] armaz = mic.getArmazDeControle();
         System.out.println( armaz[0] );
@@ -63,5 +64,5 @@ public class RodarTesteMiC1 {
         mic.printRegistros();
         mic.cicloDeClock();
         mic.printRegistros();
-    }
+    }*/
 }
