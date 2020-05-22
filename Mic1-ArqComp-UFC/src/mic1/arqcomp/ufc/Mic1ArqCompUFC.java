@@ -86,6 +86,47 @@ public class Mic1ArqCompUFC {
     private void setMir(int[] saidaControleInterno){
         this.mir = saidaControleInterno;
     }
+
+    public int[] getMar() {
+        return mar;
+    }
+
+    public int[] getMdr() {
+        return mdr;
+    }
+
+    public int[] getPc() {
+        return pc;
+    }
+
+    public int[] getMbr() {
+        return mbr;
+    }
+
+    public int[] getSp() {
+        return sp;
+    }
+
+    public int[] getLv() {
+        return lv;
+    }
+
+    public int[] getCpp() {
+        return cpp;
+    }
+
+    public int[] getTos() {
+        return tos;
+    }
+
+    public int[] getOpc() {
+        return opc;
+    }
+
+    public int[] getH() {
+        return h;
+    }
+    
     
     private void carregaArmazDeControle(){
         this.armazDeControle = new String[6];

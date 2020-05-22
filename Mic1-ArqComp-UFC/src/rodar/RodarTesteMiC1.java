@@ -43,9 +43,6 @@ public class RodarTesteMiC1 {
         int TAMRAM = 48;
         int contador = 0;
         mic.ram = new int[TAMRAM];
-        //mic.ram[0] = 0;
-        //mic.ram[1] = 2;
-        //mic.ram[2] = 3;
         //0000 0001; 0000 0001; 0000 0011; 0000 0001; 0000 0100; 0000 0110;
         String memram = "000000010000000100000011000000010000010000000110";
         //String[] mem = memram.split("");
