@@ -773,82 +773,87 @@ public class Mic1JFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        Mic1ArqCompUFC mic = new Mic1ArqCompUFC();
-        int ciclos = mic.getArmazDeControle().length;
-        String memram = this.txtMemRam.getText();
-        int TAMRAM = memram.length();// 48;
-        int contador = 0;
-        mic.ram = new int[TAMRAM];
-        //0000 0001; 0000 0001; 0000 0011; 0000 0001; 0000 0100; 0000 0110;
-        //String memram = "000000010000000100000011000000010000010000000110";
-        for (String i: memram.split("")){
-            mic.ram[contador] = Integer.parseInt(i);
-            contador++;
-        }
-        for (int i = 1; i <= ciclos; i++){
-            mic.cicloDeClock();
-            mic.printRegistros();
-            int[] mar = mic.getMar();
-            String txt = "";
-            for (int j: mar){
-                txt += String.valueOf(j);
+        try {
+            Mic1ArqCompUFC mic = new Mic1ArqCompUFC();
+            int ciclos = mic.getArmazDeControle().length;
+            String memram = this.txtMemRam.getText();
+            int TAMRAM = memram.length();// 48;
+            int contador = 0;
+            mic.ram = new int[TAMRAM];
+            //0000 0001; 0000 0001; 0000 0011; 0000 0001; 0000 0100; 0000 0110;
+            //String memram = "000000010000000100000011000000010000010000000110";
+            for (String i: memram.split("")){
+                mic.ram[contador] = Integer.parseInt(i);
+                contador++;
             }
-            this.lbBitMar.setText(txt);
-            txt = "";
-            int[] mdr = mic.getMdr();
-            for (int j: mdr){
-                txt += String.valueOf(j);
+            for (int i = 1; i <= ciclos; i++){
+                mic.cicloDeClock();
+                mic.printRegistros();
+                int[] mar = mic.getMar();
+                String txt = "";
+                for (int j: mar){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitMar.setText(txt);
+                txt = "";
+                int[] mdr = mic.getMdr();
+                for (int j: mdr){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitMdr.setText(txt);
+                txt = "";
+                int[] pc = mic.getPc();
+                for (int j: pc){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitPc.setText(txt);
+                txt = "";
+                int[] mbr = mic.getMbr();
+                for (int j: mbr){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitMbr.setText(txt);
+                txt = "";
+                int[] sp = mic.getSp();
+                for (int j: sp){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitSp.setText(txt);
+                txt = "";
+                int[] lv = mic.getLv();
+                for (int j: lv){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitLv.setText(txt);
+                txt = "";
+                int[] cpp = mic.getCpp();
+                for (int j: cpp){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitCpp.setText(txt);
+                txt = "";
+                int[] tos = mic.getTos();
+                for (int j: tos){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitTos.setText(txt);
+                txt = "";
+                int[] opc = mic.getOpc();
+                for (int j: opc){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitOpc.setText(txt);
+                txt = "";
+                int[] h = mic.getH();
+                for (int j: h){
+                    txt += String.valueOf(j);
+                }
+                this.lbBitH.setText(txt);
+                this.lbContadorCicloClock.setText(String.valueOf(i));
             }
-            this.lbBitMdr.setText(txt);
-            txt = "";
-            int[] pc = mic.getPc();
-            for (int j: pc){
-                txt += String.valueOf(j);
-            }
-            this.lbBitPc.setText(txt);
-            txt = "";
-            int[] mbr = mic.getMbr();
-            for (int j: mbr){
-                txt += String.valueOf(j);
-            }
-            this.lbBitMbr.setText(txt);
-            txt = "";
-            int[] sp = mic.getSp();
-            for (int j: sp){
-                txt += String.valueOf(j);
-            }
-            this.lbBitSp.setText(txt);
-            txt = "";
-            int[] lv = mic.getLv();
-            for (int j: lv){
-                txt += String.valueOf(j);
-            }
-            this.lbBitLv.setText(txt);
-            txt = "";
-            int[] cpp = mic.getCpp();
-            for (int j: cpp){
-                txt += String.valueOf(j);
-            }
-            this.lbBitCpp.setText(txt);
-            txt = "";
-            int[] tos = mic.getTos();
-            for (int j: tos){
-                txt += String.valueOf(j);
-            }
-            this.lbBitTos.setText(txt);
-            txt = "";
-            int[] opc = mic.getOpc();
-            for (int j: opc){
-                txt += String.valueOf(j);
-            }
-            this.lbBitOpc.setText(txt);
-            txt = "";
-            int[] h = mic.getH();
-            for (int j: h){
-                txt += String.valueOf(j);
-            }
-            this.lbBitH.setText(txt);
-            this.lbContadorCicloClock.setText(String.valueOf(i));
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex, "Erro", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Mic1JFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
