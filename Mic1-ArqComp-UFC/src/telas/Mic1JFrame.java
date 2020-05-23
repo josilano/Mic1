@@ -24,31 +24,8 @@ public class Mic1JFrame extends javax.swing.JFrame {
     public Mic1JFrame() {
         initComponents();
         mic1 = new Mic1ArqCompUFC();
-        String memram = this.txtMemRam.getText();
-        int TAMRAM = memram.length();
-        int contador = 0;
-        mic1.ram = new int[TAMRAM];
-        for (String i: memram.split("")){
-            mic1.ram[contador] = Integer.parseInt(i);
-            contador++;
-        }
-        this.lbWmar.setText("");
-        this.lbRmdr.setText("");
-        this.lbWmdr.setText("");
-        this.lbRpc.setText("");
-        this.lbWpc.setText("");
-        this.lbRmbr.setText("");
-        this.lbRsp.setText("");
-        this.lbWsp.setText("");
-        this.lbRlv.setText("");
-        this.lbWlv.setText("");
-        this.lbRcpp.setText("");
-        this.lbWcpp.setText("");
-        this.lbRtos.setText("");
-        this.lbWtos.setText("");
-        this.lbRopc.setText("");
-        this.lbWopc.setText("");
-        this.lbWh.setText("");
+        this.carregarMemoriaPrincipal();
+        this.flagWRInicial();
     }
 
     /**
@@ -121,6 +98,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
         lbRopc = new javax.swing.JLabel();
         lbWopc = new javax.swing.JLabel();
         lbWh = new javax.swing.JLabel();
+        btnCarregarMem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -464,7 +442,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
         jLabel5.setText("INSTRUÇÕES");
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
-        jLabel6.setText("Insira um valor em binário na memória principal.");
+        jLabel6.setText("Insira um valor em binário na memória principal e clique em Carregar Memória.");
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
         jLabel7.setText("Clique no botão Iniciar para executar todos os ciclos.");
@@ -556,6 +534,16 @@ public class Mic1JFrame extends javax.swing.JFrame {
         lbWh.setForeground(new java.awt.Color(255, 255, 0));
         lbWh.setText("WRITE");
 
+        btnCarregarMem.setBackground(new java.awt.Color(204, 255, 204));
+        btnCarregarMem.setFont(new java.awt.Font("Lucida Calligraphy", 1, 12)); // NOI18N
+        btnCarregarMem.setForeground(new java.awt.Color(102, 0, 102));
+        btnCarregarMem.setText("Carregar Memoria");
+        btnCarregarMem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarMemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -598,12 +586,13 @@ public class Mic1JFrame extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbRtos)
                                     .addComponent(lbRopc))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(txtMemRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel2))
+                                        .addComponent(jLabel2)
+                                        .addComponent(btnCarregarMem))
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel8))
@@ -710,13 +699,14 @@ public class Mic1JFrame extends javax.swing.JFrame {
                                 .addComponent(lbRcpp))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
-                                .addComponent(lbWcpp)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                .addComponent(lbWcpp))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtMemRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCarregarMem)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -772,12 +762,43 @@ public class Mic1JFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void carregarMemoriaPrincipal(){
+        String memram = this.txtMemRam.getText();
+        int TAMRAM = memram.length();
+        int contador = 0;
+        mic1.ram = new int[TAMRAM];
+        for (String i: memram.split("")){
+            mic1.ram[contador] = Integer.parseInt(i);
+            contador++;
+        }
+    }
+    
+    private void flagWRInicial(){
+        this.lbWmar.setText("");
+        this.lbRmdr.setText("");
+        this.lbWmdr.setText("");
+        this.lbRpc.setText("");
+        this.lbWpc.setText("");
+        this.lbRmbr.setText("");
+        this.lbRsp.setText("");
+        this.lbWsp.setText("");
+        this.lbRlv.setText("");
+        this.lbWlv.setText("");
+        this.lbRcpp.setText("");
+        this.lbWcpp.setText("");
+        this.lbRtos.setText("");
+        this.lbWtos.setText("");
+        this.lbRopc.setText("");
+        this.lbWopc.setText("");
+        this.lbWh.setText("");
+    }
+    
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         try {
             Mic1ArqCompUFC mic = new Mic1ArqCompUFC();
             int ciclos = mic.getArmazDeControle().length;
             String memram = this.txtMemRam.getText();
-            int TAMRAM = memram.length();// 48;
+            int TAMRAM = memram.length();
             int contador = 0;
             mic.ram = new int[TAMRAM];
             //0000 0001; 0000 0001; 0000 0011; 0000 0001; 0000 0100; 0000 0110;
@@ -965,6 +986,13 @@ public class Mic1JFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPorCicloActionPerformed
 
+    private void btnCarregarMemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarMemActionPerformed
+        mic1 = new Mic1ArqCompUFC();
+        this.carregarMemoriaPrincipal();
+        this.flagWRInicial();
+        this.lbContadorCicloClock.setText("0");
+    }//GEN-LAST:event_btnCarregarMemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1001,6 +1029,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCarregarMem;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnPorCiclo;
     private javax.swing.JLabel jLabel1;
