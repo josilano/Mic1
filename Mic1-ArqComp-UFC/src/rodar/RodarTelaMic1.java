@@ -18,6 +18,7 @@ public class RodarTelaMic1 {
      */
     public static void main(String[] args) {
         Mic1JFrame tela = new Mic1JFrame();
+        tela.setLocationRelativeTo(null);
         tela.setVisible(true);
     }
     

@@ -57,7 +57,34 @@ public class Mic1ArqCompUFC {
         this.h = new int[this.TAMREG];
         this.n = 0;
         this.z = 0;
-        this.carregaArmazDeControle();
+        this.carregaArmazDeControle(0);
+        this.mir = new int[this.TAMMIR];
+        this.mpc = new int[this.TAMMPC];
+        carregaZeroNosReg();
+    }
+    
+    public Mic1ArqCompUFC(int numaula){
+        /** array de [34]
+         * [0] - enable write
+         * [1] - enable read
+         * [2] ao [34] - 32 bits de armazenamento
+         */
+        this.TAMREG = 34;
+        this.TAMMIR = 36;
+        this.TAMMPC = 9;
+        this.mar = new int[this.TAMREG];
+        this.mdr = new int[this.TAMREG];
+        this.pc = new int[this.TAMREG];
+        this.mbr = new int[this.TAMREG];
+        this.sp = new int[this.TAMREG];
+        this.lv = new int[this.TAMREG];
+        this.cpp = new int[this.TAMREG];
+        this.tos = new int[this.TAMREG];
+        this.opc = new int[this.TAMREG];
+        this.h = new int[this.TAMREG];
+        this.n = 0;
+        this.z = 0;
+        this.carregaArmazDeControle(numaula);
         this.mir = new int[this.TAMMIR];
         this.mpc = new int[this.TAMMPC];
         carregaZeroNosReg();
@@ -128,14 +155,48 @@ public class Mic1ArqCompUFC {
     }
     
     
-    private void carregaArmazDeControle(){
-        this.armazDeControle = new String[6];
-        this.armazDeControle[0] = "000000000100001101010000001000010001";
-        this.armazDeControle[1] = "000000010000001101010000001000010001";
-        this.armazDeControle[2] = "000000011000000101001000000000000010";
-        this.armazDeControle[3] = "000000100000001101010000001000010001";
-        this.armazDeControle[4] = "000000101000000101000100000000000010";
-        this.armazDeControle[5] = "000000000000001111000000000100000010";
+    private void carregaArmazDeControle(int numAula){
+        final int AULA9 = 0;
+        final int AULA10 = 1;
+        if (numAula == AULA9){
+            this.armazDeControle = new String[6];
+            this.armazDeControle[0] = "000000000100001101010000001000010001";
+            this.armazDeControle[1] = "000000010000001101010000001000010001";
+            this.armazDeControle[2] = "000000011000000101001000000000000010";
+            this.armazDeControle[3] = "000000100000001101010000001000010001";
+            this.armazDeControle[4] = "000000101000000101000100000000000010";
+            this.armazDeControle[5] = "000000000000001111000000000100000010";
+        }
+        if (numAula == AULA10){
+            this.armazDeControle = new String[270];
+            this.armazDeControle[0] = "000000000100001101010000001000010001"; //PC <- PC + 1; fetch; GOTO MBR;
+            //OPC = OPC + memory[end_word];
+            this.armazDeControle[2] = "000000011000001101010000001000010001"; //PC <- PC + 1; fetch;
+            this.armazDeControle[3] = "000000100000000101000000000010100010"; //MAR <- MBR; read;
+            this.armazDeControle[4] = "000000101000000101001000000000000000"; //H <- MDR;
+            this.armazDeControle[5] = "000000000000001111000100000000001000"; //OPC <- OPC + H; GOTO MAIN;
+
+            //memory[end_word] = OPC;
+            this.armazDeControle[6] = "000000111000001101010000001000010001"; //PC <- PC + 1; fetch;
+            this.armazDeControle[7] = "000001000000000101000000000010000010"; //MAR <- MBR;
+            this.armazDeControle[8] = "000000000000000101000000000101001000"; //MDR <- OPC; write; GOTO MAIN;
+
+            //goto endereco_comando_programa;
+            this.armazDeControle[9] = "000001010000001101010000001000010001"; //PC <- PC + 1; fetch;
+            this.armazDeControle[10] = "000000000100000101000000001000010010"; //PC <- MBR; fetch; GOTO MBR;
+
+            //if OPC = 0 goto endereco_comando_programa else goto proxima_linha;
+            this.armazDeControle[11] = "000001100001000101000100000000001000"; //OPC <- OPC; IF ALU = 0 GOTO 268 (100001100) 								                ELSE GOTO 12 (000001100);
+            this.armazDeControle[12] = "000000000000001101010000001000000001"; //PC <- PC + 1; GOTO MAIN;
+            this.armazDeControle[268] = "100001101000001101010000001000010001"; //PC <- PC + 1; fetch;
+            this.armazDeControle[269] = "000000000100000101000000001000010010"; //PC <- MBR; fetch; GOTO MBR;
+
+            //OPC = OPC - memory[end_word];
+            this.armazDeControle[13] = "000001110000001101010000001000010001"; //PC <- PC + 1; fetch;
+            this.armazDeControle[14] = "000001111000000101000000000010100010"; //MAR <- MBR; read;
+            this.armazDeControle[15] = "000010000000000101001000000000000000"; //H <- MDR;
+            this.armazDeControle[16] = "000000000000001111110100000000001000";
+        }
     }
     
     private void carregaZeroNosReg(){
@@ -426,7 +487,7 @@ public class Mic1ArqCompUFC {
         this.h[0] =   (c[0] == 1) ? 1 : 0;
     }
     
-    private int binToDec(int[] arr){
+    public int binToDec(int[] arr){
         int decimal = 0;
         for (int i = arr.length - 1; i >= 0; i--){
             if (arr[i] == 1) decimal += Math.pow(2, (arr.length-1)-i);
