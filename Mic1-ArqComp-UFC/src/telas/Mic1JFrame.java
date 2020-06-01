@@ -809,10 +809,18 @@ public class Mic1JFrame extends javax.swing.JFrame {
             }
             txtmem += "["+contador+"]"+" "+binario+" | "+mic1.binToDec(arri);
             if (contador % 4 == 0){
-                for (int j = 0; j < palavra32bits.length; j++){
+                /*for (int j = 0; j < palavra32bits.length; j++){
                     palavra32bits[j] = mic1.ram[contpalavra];
                     //System.out.println(contpalavra);
                     contpalavra++;
+                }
+                txtmem += " | "+mic1.binToDec(palavra32bits);*/
+                int bitpalavra=24;
+                for(int j=0;j<palavra32bits.length;j++){
+                    palavra32bits[bitpalavra]=mic1.ram[contpalavra];
+                    contpalavra++;
+                    bitpalavra++;
+                    if (j==23 | j==15 | j==7) bitpalavra-=15;
                 }
                 txtmem += " | "+mic1.binToDec(palavra32bits);
             }

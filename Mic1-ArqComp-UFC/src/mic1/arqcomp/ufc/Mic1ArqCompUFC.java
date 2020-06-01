@@ -280,9 +280,18 @@ public class Mic1ArqCompUFC {
             }
             int indiceMAR = this.binToDec(arrmar);
             indiceMAR *= palavraMAR;
-            for (int i = 0; i < palavraMAR; i++){
+            /*for (int i = 0; i < palavraMAR; i++){
                 this.ram[indiceMAR] = this.mdr[i+2];
                 indiceMAR++;
+            }*/
+            int bitmdr=26;//26-33, 18-25, 10-17, 2-9
+            for (int i=0;i<4;i++){
+                for(int j=0;j<8;j++){
+                    this.ram[indiceMAR] = this.mdr[bitmdr];
+                    bitmdr++;
+                    indiceMAR++;
+                }
+                bitmdr-=15;
             }
         }
         if (r == 1){
@@ -292,9 +301,18 @@ public class Mic1ArqCompUFC {
             }
             int indiceMAR = this.binToDec(arrmar);
             indiceMAR *= palavraMAR;
-            for (int i = 0; i < palavraMAR; i++){
+            /*for (int i = 0; i < palavraMAR; i++){
                 this.mdr[i+2] = this.ram[indiceMAR];
                 indiceMAR++;
+            }*/
+            int bitmdr=26;//26-33, 18-25, 10-17, 2-9
+            for (int i=0;i<4;i++){
+                for(int j=0;j<8;j++){
+                    this.mdr[bitmdr] = this.ram[indiceMAR];
+                    bitmdr++;
+                    indiceMAR++;
+                }
+                bitmdr-=15;
             }
         }
         if (f == 1){
