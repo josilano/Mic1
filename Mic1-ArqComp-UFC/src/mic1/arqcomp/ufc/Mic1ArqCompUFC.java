@@ -5,6 +5,8 @@
  */
 package mic1.arqcomp.ufc;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author LaNo
@@ -57,13 +59,13 @@ public class Mic1ArqCompUFC {
         this.h = new int[this.TAMREG];
         this.n = 0;
         this.z = 0;
-        this.carregaArmazDeControle(0);
+        this.carregaArmazDeControle(0, null);
         this.mir = new int[this.TAMMIR];
         this.mpc = new int[this.TAMMPC];
         carregaZeroNosReg();
     }
     
-    public Mic1ArqCompUFC(int numaula){
+    public Mic1ArqCompUFC(int numaula, ArrayList<String> arqAC){
         /** array de [34]
          * [0] - enable write
          * [1] - enable read
@@ -84,7 +86,7 @@ public class Mic1ArqCompUFC {
         this.h = new int[this.TAMREG];
         this.n = 0;
         this.z = 0;
-        this.carregaArmazDeControle(numaula);
+        this.carregaArmazDeControle(numaula, arqAC);
         this.mir = new int[this.TAMMIR];
         this.mpc = new int[this.TAMMPC];
         carregaZeroNosReg();
@@ -155,10 +157,18 @@ public class Mic1ArqCompUFC {
     }
     
     
-    private void carregaArmazDeControle(int numAula){
+    private void carregaArmazDeControle(int numAula, ArrayList<String> arqAC){
         final int AULA9 = 0;
         final int AULA10 = 1;
-        if (numAula == AULA9){
+        if(arqAC!=null){
+            int cont = 0;
+            this.armazDeControle = new String[arqAC.size()];
+            for(String t: arqAC){
+                this.armazDeControle[cont]=t;
+                cont++;
+            }
+        }
+        else if (numAula == AULA9){
             this.armazDeControle = new String[6];
             this.armazDeControle[0] = "000000000100001101010000001000010001";
             this.armazDeControle[1] = "000000010000001101010000001000010001";
@@ -167,7 +177,7 @@ public class Mic1ArqCompUFC {
             this.armazDeControle[4] = "000000101000000101000100000000000010";
             this.armazDeControle[5] = "000000000000001111000000000100000010";
         }
-        if (numAula == AULA10){
+        else if (numAula == AULA10){
             this.armazDeControle = new String[270];
             this.armazDeControle[0] = "000000000100001101010000001000010001"; //PC <- PC + 1; fetch; GOTO MBR;
             //OPC = OPC + memory[end_word];
@@ -291,7 +301,7 @@ public class Mic1ArqCompUFC {
                     bitmdr++;
                     indiceMAR++;
                 }
-                bitmdr-=15;
+                bitmdr-=16;
             }
         }
         if (r == 1){
@@ -312,7 +322,7 @@ public class Mic1ArqCompUFC {
                     bitmdr++;
                     indiceMAR++;
                 }
-                bitmdr-=15;
+                bitmdr-=16;
             }
         }
         if (f == 1){

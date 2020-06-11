@@ -5,6 +5,8 @@
  */
 package telas;
 
+import java.io.File;
+import javax.swing.JFileChooser;
 import mic1.arqcomp.ufc.Mic1ArqCompUFC;
 
 /**
@@ -19,10 +21,15 @@ public class ConfigAC extends javax.swing.JDialog {
     public int ac;
     public boolean altera = false;
     public String memoria = null;
+    public String caminhoDoArqAC = null;
+    public String caminhoArqMem = null;
+    private final String txtPadraoArquivo = "Nenhum arquivo selecionado";
     
     public ConfigAC(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.lbNomeArquivo.setText(txtPadraoArquivo);
+        this.lbNomeArqMem.setText(txtPadraoArquivo);
     }
 
     /**
@@ -44,6 +51,12 @@ public class ConfigAC extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        btnSelArq = new javax.swing.JButton();
+        lbNomeArquivo = new javax.swing.JLabel();
+        btnSelArqMem = new javax.swing.JButton();
+        lbNomeArqMem = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,51 +88,90 @@ public class ConfigAC extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel3.setText("INSTRUÇÕES");
 
-        jLabel5.setText("Selecione o Armazenamento de Controle pela aula do professor");
+        jLabel5.setText("Selecione o Armazenamento de Controle pela aula do professor ou escolha um arquivo");
 
-        jLabel6.setText("Insira um valor em binário na Memória Principal");
+        jLabel6.setText("Insira um valor em binário na Memória Principal ou selecione um arquivo");
 
         jLabel7.setText("Clique em Alterar");
+
+        btnSelArq.setText("Selecionar Arquivo");
+        btnSelArq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelArqActionPerformed(evt);
+            }
+        });
+
+        lbNomeArquivo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+
+        btnSelArqMem.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSelArqMem.setText("Selecione arq");
+        btnSelArqMem.setBorderPainted(false);
+        btnSelArqMem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelArqMemActionPerformed(evt);
+            }
+        });
+
+        lbNomeArqMem.setForeground(new java.awt.Color(255, 0, 0));
+        lbNomeArqMem.setText("Sem arquivo selecionado");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("OU");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setText("OU");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(216, 216, 216)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtMemRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(186, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(btnSelArq)
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
                         .addComponent(cbArmCont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCarregarMemAC)
-                        .addGap(78, 78, 78))))
+                        .addComponent(btnCarregarMemAC))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(206, 206, 206)
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(207, 207, 207)
+                                .addComponent(jLabel3))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(lbNomeArquivo)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(78, 78, 78))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(249, 249, 249)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
+                        .addGap(130, 130, 130)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel7))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel7)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnSelArqMem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
+                        .addGap(15, 15, 15)
+                        .addComponent(txtMemRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbNomeArqMem)))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,17 +179,25 @@ public class ConfigAC extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMemRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbArmCont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCarregarMemAC))
-                .addGap(52, 52, 52)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSelArqMem)
+                    .addComponent(txtMemRam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbNomeArqMem)
+                .addGap(41, 41, 41)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSelArq)
+                    .addComponent(btnCarregarMemAC)
+                    .addComponent(cbArmCont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(11, 11, 11)
+                .addComponent(lbNomeArquivo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
@@ -145,7 +205,7 @@ public class ConfigAC extends javax.swing.JDialog {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -156,6 +216,38 @@ public class ConfigAC extends javax.swing.JDialog {
         this.ac = this.cbArmCont.getSelectedIndex();
         this.altera = true;
     }//GEN-LAST:event_btnCarregarMemACActionPerformed
+
+    private void btnSelArqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArqActionPerformed
+        JFileChooser file = new JFileChooser();
+        file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int i= file.showSaveDialog(null);
+        if (i==1) {
+            this.caminhoDoArqAC = null;
+            this.lbNomeArquivo.setText(txtPadraoArquivo);
+        }
+        else {
+           File arquivo = file.getSelectedFile();
+           this.caminhoDoArqAC = arquivo.getPath();
+           this.lbNomeArquivo.setText(arquivo.getName());
+           //System.out.println(arquivo.getPath());
+           //System.out.println(arquivo.getName());
+        }
+    }//GEN-LAST:event_btnSelArqActionPerformed
+
+    private void btnSelArqMemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArqMemActionPerformed
+        JFileChooser file = new JFileChooser();
+        file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int i= file.showSaveDialog(null);
+        if (i==1) {
+            this.caminhoArqMem = null;
+            this.lbNomeArqMem.setText(txtPadraoArquivo);
+        }
+        else {
+           File arquivo = file.getSelectedFile();
+           this.caminhoArqMem = arquivo.getPath();
+           this.lbNomeArqMem.setText(arquivo.getName());
+        }
+    }//GEN-LAST:event_btnSelArqMemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,6 +293,8 @@ public class ConfigAC extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCarregarMemAC;
+    private javax.swing.JButton btnSelArq;
+    private javax.swing.JButton btnSelArqMem;
     private javax.swing.JComboBox<String> cbArmCont;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -209,6 +303,10 @@ public class ConfigAC extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lbNomeArqMem;
+    private javax.swing.JLabel lbNomeArquivo;
     private javax.swing.JTextField txtMemRam;
     // End of variables declaration//GEN-END:variables
 }
