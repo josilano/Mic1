@@ -644,6 +644,9 @@ public class Mic1ArqCompUFC {
         System.out.println("");
     }
     
+    public boolean isWriteMemP(){
+        return this.mir[29] == 1;
+    }
     public void cicloDeClock(){
         //executar os metodos na sequencia correta
         //System.out.println("ciclo de clock");

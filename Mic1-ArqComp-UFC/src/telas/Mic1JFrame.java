@@ -799,9 +799,11 @@ public class Mic1JFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void carregarMemoriaPrincipal(String memram){
-        int TAMRAM = memram.length();
+        //int TAMRAM = memram.length();
         int contador = 0;
-        mic1.ram = new int[TAMRAM];
+        //mic1.ram = new int[TAMRAM];
+        mic1.ram = new int[32*5000];
+        System.out.println(memram.length());
         for (String i: memram.split("")){
             mic1.ram[contador] = Integer.parseInt(i);
             contador++;
@@ -811,6 +813,48 @@ public class Mic1JFrame extends javax.swing.JFrame {
     private void settxtMemPTela(){
         String txtmem = "";
         int contador = 0;
+        int contpalavra = 0;
+        for(int i=0;i<mic1.ram.length;i+=32){
+            int[] palavra32bits = new int[32];
+            int bitpalavra=24;
+            
+            for(int j=0;j<palavra32bits.length;j++){
+                palavra32bits[bitpalavra]=mic1.ram[contpalavra];
+                contpalavra++;
+                bitpalavra++;
+                if (j==23 | j==15 | j==7) bitpalavra-=16;
+            }
+            int valorPalavra = mic1.binToDec(palavra32bits);
+            if(valorPalavra !=0){
+                bitpalavra=24;
+                int[] arri = new int[8];
+                for(int j=0;j<4;j++){
+                    String binario = "";
+                    arri[0]=palavra32bits[bitpalavra];
+                    binario+=arri[0];
+                    arri[1]=palavra32bits[++bitpalavra];
+                    binario+=arri[1];
+                    arri[2]=palavra32bits[++bitpalavra];
+                    binario+=arri[2];
+                    arri[3]=palavra32bits[++bitpalavra];
+                    binario+=arri[3];
+                    arri[4]=palavra32bits[++bitpalavra];
+                    binario+=arri[4];
+                    arri[5]=palavra32bits[++bitpalavra];
+                    binario+=arri[5];
+                    arri[6]=palavra32bits[++bitpalavra];
+                    binario+=arri[6];
+                    arri[7]=palavra32bits[++bitpalavra];
+                    binario+=arri[7];
+                    bitpalavra-=15;
+                    txtmem += "["+contador+"]"+" "+binario+" | "+mic1.binToDec(arri);
+                    if (contador % 4 == 0) txtmem += " | "+valorPalavra;
+                    txtmem += "\n";
+                    contador++;
+                } 
+            }
+            else contador+=4;
+        }
         /*for (int i = 0; i < mic1.ram.length; i+=8){
             int[] arri = new int[8];
             for (int j=0;j< this.memp.substring(i, i+8).length(); j++){
@@ -820,7 +864,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
             txtmem += "["+contador+"]"+" "+this.memp.substring(i, i+8)+" | "+mic1.binToDec(arri)+"\n";
             contador++;
         }*/
-        int contpalavra = 0;
+/*        int contpalavra = 0;
         for (int i=0; i<mic1.ram.length;i+=8){
             int[] arri = new int[8];
             String binario = "";
@@ -830,14 +874,14 @@ public class Mic1JFrame extends javax.swing.JFrame {
                 binario += String.valueOf(mic1.ram[i+j]);
             }
             txtmem += "["+contador+"]"+" "+binario+" | "+mic1.binToDec(arri);
-            if (contador % 4 == 0){
+            if (contador % 4 == 0){*/
                 /*for (int j = 0; j < palavra32bits.length; j++){
                     palavra32bits[j] = mic1.ram[contpalavra];
                     //System.out.println(contpalavra);
                     contpalavra++;
                 }
                 txtmem += " | "+mic1.binToDec(palavra32bits);*/
-                int bitpalavra=24;
+/*                int bitpalavra=24;
                 for(int j=0;j<palavra32bits.length;j++){
                     palavra32bits[bitpalavra]=mic1.ram[contpalavra];
                     contpalavra++;
@@ -849,7 +893,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
             txtmem += "\n";
             //txtmem += "["+contador+"]"+" "+binario+" | "+mic1.binToDec(arri)+"\n";
             contador++;
-        }
+        }*/
         this.txtaMemPTela.setText(txtmem);
     }
     
@@ -901,9 +945,10 @@ public class Mic1JFrame extends javax.swing.JFrame {
             Mic1ArqCompUFC mic = new Mic1ArqCompUFC(this.aulaArC, this.arqArCrtl);
             int ciclos = mic.getArmazDeControle().length;
             String memram = this.memp;//this.txtMemRam.getText();
-            int TAMRAM = memram.length();
+            //int TAMRAM = memram.length();
             int contador = 0;
-            mic.ram = new int[TAMRAM];
+            //mic.ram = new int[TAMRAM];
+            mic.ram = new int[32*5000];//tam=8416
             //0000 0001; 0000 0001; 0000 0011; 0000 0001; 0000 0100; 0000 0110;
             //String memram = "000000010000000100000011000000010000010000000110";
             for (String i: memram.split("")){
@@ -912,7 +957,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
             }
             for (int i = 1; i <= ciclos; i++){
                 mic.cicloDeClock();
-                mic.printRegistros();
+                //mic.printRegistros();
                 int[] mar = mic.getMar();
                 String txt = "";
                 for (int j: mar){
@@ -975,7 +1020,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
                 this.lbBitH.setText(txt);
                 this.lbContadorCicloClock.setText(String.valueOf(i));
             }
-            this.settxtMemPTela();
+            if (mic1.isWriteMemP()) this.settxtMemPTela();
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex, "Erro", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(Mic1JFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1084,7 +1129,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
             else this.lbWh.setText("");
             this.lbContadorCicloClock.setText(String.valueOf(qtdCiclo));
             qtdCiclo++;
-            this.settxtMemPTela();
+            if (mic1.isWriteMemP()) this.settxtMemPTela();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Erro, provavel estouro de memória", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(Mic1JFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1129,7 +1174,6 @@ public class Mic1JFrame extends javax.swing.JFrame {
             }
             else 
                 JOptionPane.showMessageDialog(null, "Há comandos inválidos", "Erro de sintaxe", JOptionPane.ERROR_MESSAGE);
-            //agr escreve o arq
         }
     }//GEN-LAST:event_btnIJVMActionPerformed
 
