@@ -28,6 +28,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
     int aulaArC;
     ManipulaArq ma;
     ArrayList<String> arqArCrtl;
+    ArrayList<Integer> pilha;
     
     public Mic1JFrame() {
         initComponents();
@@ -40,6 +41,8 @@ public class Mic1JFrame extends javax.swing.JFrame {
         this.settxtMemPTela();
         ma = new ManipulaArq();
         arqArCrtl = null;
+        pilha = new ArrayList<>();
+        this.inicialTxtPilhaIJVM();
     }
 
     /**
@@ -116,6 +119,9 @@ public class Mic1JFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtaMemPTela = new javax.swing.JTextArea();
         btnIJVM = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        pilhaIJVM = new javax.swing.JTextArea();
 
         jMenu1.setText("jMenu1");
 
@@ -457,10 +463,10 @@ public class Mic1JFrame extends javax.swing.JFrame {
         jLabel5.setText("INSTRUÇÕES");
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
-        jLabel7.setText("Clique no botão Iniciar para executar todos os ciclos.");
+        jLabel7.setText("Botão Iniciar executa todos os ciclos.");
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
-        jLabel8.setText("Clique no botão Por Ciclo para executar cada ciclo a medida que for clicando.");
+        jLabel8.setText("Botão Por Ciclo executa um ciclo por vez.");
 
         btnPorCiclo.setBackground(new java.awt.Color(153, 204, 0));
         btnPorCiclo.setFont(new java.awt.Font("Castellar", 0, 12)); // NOI18N
@@ -573,6 +579,17 @@ public class Mic1JFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 0, 204));
+        jLabel2.setText("Pilha do IJVM");
+
+        pilhaIJVM.setEditable(false);
+        pilhaIJVM.setColumns(8);
+        pilhaIJVM.setRows(5);
+        pilhaIJVM.setTabSize(6);
+        pilhaIJVM.setText("SP -> 9999 <- LV ");
+        jScrollPane2.setViewportView(pilhaIJVM);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -622,24 +639,35 @@ public class Mic1JFrame extends javax.swing.JFrame {
                                                     .addComponent(lbRlv))
                                                 .addGap(150, 150, 150)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addComponent(btnIniciar)
-                                                        .addGap(81, 81, 81)
-                                                        .addComponent(btnPorCiclo))
-                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                            .addComponent(jLabel22)
-                                                            .addGap(18, 18, 18)
-                                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(lbContadorCicloClock, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                         .addComponent(jLabel3)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
                                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                             .addComponent(btnIJVM)
-                                                            .addComponent(btnConfigMic1)))))
+                                                            .addComponent(btnConfigMic1)))
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addComponent(btnIniciar)
+                                                                .addGap(81, 81, 81)
+                                                                .addComponent(btnPorCiclo))
+                                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                    .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                                        .addComponent(jLabel22)
+                                                                        .addGap(18, 18, 18)
+                                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                            .addComponent(lbContadorCicloClock, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                        .addGap(59, 59, 59)
+                                                                        .addComponent(jLabel2))
+                                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                        .addGap(46, 46, 46)
+                                                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                        .addGap(0, 0, Short.MAX_VALUE))))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(lbRmdr)
@@ -722,63 +750,69 @@ public class Mic1JFrame extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(painelLv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(12, 12, 12)
-                                    .addComponent(lbRlv)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(lbWlv)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(lbRcpp))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(lbWcpp)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(9, 9, 9)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbRtos)
-                                            .addComponent(lbWtos))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(painelLv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addGap(12, 12, 12)
+                                            .addComponent(lbRlv)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addComponent(lbWlv)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(23, 23, 23)
+                                        .addComponent(lbRcpp))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(20, 20, 20)
-                                        .addComponent(lbWopc))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbRopc)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbWh)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(13, 13, 13)))
+                                        .addComponent(lbWcpp)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(9, 9, 9)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lbRtos)
+                                                    .addComponent(lbWtos))))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(20, 20, 20)
+                                                .addComponent(lbWopc))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lbRopc)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbWh)
+                                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -803,7 +837,6 @@ public class Mic1JFrame extends javax.swing.JFrame {
         int contador = 0;
         //mic1.ram = new int[TAMRAM];
         mic1.ram = new int[32*5000];
-        System.out.println(memram.length());
         for (String i: memram.split("")){
             mic1.ram[contador] = Integer.parseInt(i);
             contador++;
@@ -930,6 +963,10 @@ public class Mic1JFrame extends javax.swing.JFrame {
         this.lbBitH.setText("0000000000000000000000000000000000");
     }
     
+    private void inicialTxtPilhaIJVM(){
+        this.pilhaIJVM.setText("SP -> | 0 | <- LV");
+    }
+    
     private void restartMic1(int numaula, String memoriaP, ArrayList<String> arqAC){
         mic1 = new Mic1ArqCompUFC(numaula, arqAC);
         this.carregarMemoriaPrincipal(memoriaP);
@@ -938,6 +975,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
         this.lbContadorCicloClock.setText("0");
         qtdCiclo = 1;
         this.settxtMemPTela();
+        this.inicialTxtPilhaIJVM();
     }
     
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
@@ -1021,6 +1059,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
                 this.lbContadorCicloClock.setText(String.valueOf(i));
             }
             if (mic1.isWriteMemP()) this.settxtMemPTela();
+            this.setPilhaIJVM();
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex, "Erro", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(Mic1JFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1130,6 +1169,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
             this.lbContadorCicloClock.setText(String.valueOf(qtdCiclo));
             qtdCiclo++;
             if (mic1.isWriteMemP()) this.settxtMemPTela();
+            this.setPilhaIJVM();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "Erro, provavel estouro de memória", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(Mic1JFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1177,6 +1217,48 @@ public class Mic1JFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIJVMActionPerformed
 
+    private void setPilhaIJVM(){
+        //verifica se houve escrita no tos
+        if(mic1.getTos()[0] ==1){
+            int[] sp = mic1.getSp();
+            final int defaultSP = 4099;
+            int vSP = mic1.binToDec(sp);
+            int stack = vSP-defaultSP;
+            if (stack==0){
+                pilha.removeAll(pilha);
+                this.pilhaIJVM.setText("SP -> | 0 | <- LV");
+            }
+            if(stack > pilha.size()){
+                int[] tos = mic1.getTos();
+                tos[0]=0;tos[1]=0;
+                pilha.add(mic1.binToDec(tos));
+                String t = "SP ->";
+                for(int i= pilha.size()-1;i>=0;i--){
+                    t+= "sub | "+pilha.get(i)+" |";
+                    if(i>0) t+="\n";
+                }
+                t+=" <- LV";
+                t=t.replaceFirst("sub", "");
+                t=t.replace("sub", "        ");
+                this.pilhaIJVM.setText(t);
+            }
+            if(stack < pilha.size()){
+                int[] tos = mic1.getTos();
+                tos[0]=0;tos[1]=0;
+                pilha.remove(pilha.size()-1);
+                pilha.set(pilha.size()-1, mic1.binToDec(tos));
+                String t = "SP ->";
+                for(int i= pilha.size()-1;i>=0;i--){
+                    t+= "sub | "+pilha.get(i)+" |";
+                    if(i>0) t+="\n";
+                }
+                t+=" <- LV";
+                t=t.replaceFirst("sub", "");
+                t=t.replace("sub", "        ");
+                this.pilhaIJVM.setText(t);
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -1218,6 +1300,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnPorCiclo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1237,6 +1320,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbBitCpp;
     private javax.swing.JLabel lbBitH;
     private javax.swing.JLabel lbBitLv;
@@ -1276,6 +1360,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbWsp;
     private javax.swing.JLabel lbWtos;
     private javax.swing.JPanel painelLv;
+    private javax.swing.JTextArea pilhaIJVM;
     private java.awt.ScrollPane scrollPane1;
     private javax.swing.JTextArea txtaMemPTela;
     // End of variables declaration//GEN-END:variables
