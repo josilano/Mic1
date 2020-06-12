@@ -215,6 +215,7 @@ public class ConfigAC extends javax.swing.JDialog {
         this.memoria = this.txtMemRam.getText();
         this.ac = this.cbArmCont.getSelectedIndex();
         this.altera = true;
+        this.dispose();
     }//GEN-LAST:event_btnCarregarMemACActionPerformed
 
     private void btnSelArqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArqActionPerformed
