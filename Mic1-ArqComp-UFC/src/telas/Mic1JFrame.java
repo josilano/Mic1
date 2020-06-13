@@ -965,6 +965,7 @@ public class Mic1JFrame extends javax.swing.JFrame {
     
     private void inicialTxtPilhaIJVM(){
         this.pilhaIJVM.setText("SP -> | 0 | <- LV");
+        this.pilha.removeAll(pilha);
     }
     
     private void restartMic1(int numaula, String memoriaP, ArrayList<String> arqAC){
@@ -1193,6 +1194,8 @@ public class Mic1JFrame extends javax.swing.JFrame {
             //this.ma.printMicroInstArquivo(arc);
             arc = this.ma.completaZerosADireitaByte(arc);
             arc = this.ma.preArmazenamentoControle(arc);
+            if(cac.nomeArquivoArzCtrl.equalsIgnoreCase("microprog.rom"))
+                arc=this.ma.swapSll8Sra1(arc);
             this.restartMic1(this.aulaArC=cac.ac, memp, this.arqArCrtl=arc);
         }
         else if (cac.altera) this.restartMic1(this.aulaArC=cac.ac, memp, this.arqArCrtl=null);

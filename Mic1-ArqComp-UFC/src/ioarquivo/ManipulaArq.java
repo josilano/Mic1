@@ -119,4 +119,20 @@ public class ManipulaArq {
     public void escreveArquivo(){
         
     }
+    
+    //corrige o bug no microprog.rom do professor, inversao dos bits sll8 e sra1
+    public ArrayList<String> swapSll8Sra1(ArrayList<String> list){
+        for(String t: list){
+            String[] arr = t.split("");
+            if (Integer.parseInt(arr[12]) != Integer.parseInt(arr[13])){
+                String sll8v1 = arr[12];
+                arr[12] = arr[13];
+                arr[13] = sll8v1;
+                String tmp = "";
+                for(String f: arr) tmp+=f;
+                list.set(list.indexOf(t), tmp);
+            }
+        }
+        return list;
+    }
 }

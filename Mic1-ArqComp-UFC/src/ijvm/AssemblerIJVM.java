@@ -83,7 +83,7 @@ public class AssemblerIJVM {
                 }
                 else {
                     marcadorLinha.add(linha[0]);
-                    marcadorLinha.add(String.valueOf(instrucoes.size()));
+                    marcadorLinha.add(String.valueOf(instrucoes.size()+1));
                 }//supoe q eh marcador d linha, mas pode ser instr. invalida
                 if (assemblyijvm.contains(linha[1]))
                     instrucoes.add(opcodes.get(assemblyijvm.indexOf(linha[1])));
@@ -99,7 +99,7 @@ public class AssemblerIJVM {
                 }
                 else {
                     marcadorLinha.add(linha[0]);
-                    marcadorLinha.add(String.valueOf(instrucoes.size()));
+                    marcadorLinha.add(String.valueOf(instrucoes.size()+1));
                 }//supoe q eh marcador d linha, mas pode ser instr. invalida
                 if (assemblyijvm.contains(linha[1])){
                     instrucoes.add(opcodes.get(assemblyijvm.indexOf(linha[1])));
@@ -114,11 +114,10 @@ public class AssemblerIJVM {
         //troca identicador de linha e variavel
         for(String t: instrucoes){
             if (marcadorLinha.contains(t)) {
-                String idLinha = Integer.toBinaryString(Integer.parseInt(marcadorLinha.get(marcadorLinha.indexOf(t)+1))-instrucoes.indexOf(t)+1-2);
+                String idLinha = Integer.toBinaryString(Integer.parseInt(marcadorLinha.get(marcadorLinha.indexOf(t)+1))-(instrucoes.indexOf(t)+1-2));
                 if (idLinha.length()>16) idLinha = idLinha.substring(idLinha.length()-16);
                 if(idLinha.length()>8) {
                     int indice = instrucoes.indexOf(t)-1;
-                    instrucoes.set(instrucoes.indexOf(t)-1, "11111111");
                     instrucoes.set(instrucoes.indexOf(t), idLinha.substring(idLinha.length()-8));
                     instrucoes.set(indice, idLinha.substring(0, idLinha.length()-8));
                 }

@@ -24,6 +24,7 @@ public class ConfigAC extends javax.swing.JDialog {
     public String caminhoDoArqAC = null;
     public String caminhoArqMem = null;
     private final String txtPadraoArquivo = "Nenhum arquivo selecionado";
+    public String nomeArquivoArzCtrl = null;
     
     public ConfigAC(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -225,11 +226,13 @@ public class ConfigAC extends javax.swing.JDialog {
         if (i==1) {
             this.caminhoDoArqAC = null;
             this.lbNomeArquivo.setText(txtPadraoArquivo);
+            nomeArquivoArzCtrl = null;
         }
         else {
            File arquivo = file.getSelectedFile();
            this.caminhoDoArqAC = arquivo.getPath();
            this.lbNomeArquivo.setText(arquivo.getName());
+           nomeArquivoArzCtrl = arquivo.getName();
            //System.out.println(arquivo.getPath());
            //System.out.println(arquivo.getName());
         }
