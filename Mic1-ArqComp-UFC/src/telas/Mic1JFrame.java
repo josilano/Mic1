@@ -1183,7 +1183,8 @@ public class Mic1JFrame extends javax.swing.JFrame {
         cac.setVisible(true);
         //if (cac.altera) this.restartMic1(this.aulaArC=cac.ac, this.memp=cac.memoria);
         if (cac.caminhoArqMem != null){
-            ArrayList<String> armem = this.ma.lerArquivo(cac.caminhoArqMem);
+            //ArrayList<String> armem = this.ma.lerArquivo(cac.caminhoArqMem);
+            ArrayList<String> armem = this.ma.lerArquivoAula15(cac.caminhoArqMem);
             String txttmp = "";
             txttmp = armem.stream().map((t) -> t).reduce(txttmp, String::concat);
             this.memp = txttmp;
@@ -1209,7 +1210,8 @@ public class Mic1JFrame extends javax.swing.JFrame {
             ArrayList<String> arqijvm = this.ma.lerArquivo(ijvm.caminhoArqIJVM);
             AssemblerIJVM assembler = new AssemblerIJVM();
             arqijvm=assembler.montagemInstrucoes(arqijvm);
-            arqijvm=assembler.inicializacaoInstrucoes(arqijvm);
+            //arqijvm=assembler.inicializacaoInstrucoes(arqijvm);
+            arqijvm=assembler.inicializacaoInstrucoesAula15(arqijvm);
             if(assembler.isByte(arqijvm)){
                 arqijvm=this.ma.completaZerosADireitaByte(arqijvm);
                 if (this.ma.escreveArquivoBinario(arqijvm, ijvm.nomeArqSaida))

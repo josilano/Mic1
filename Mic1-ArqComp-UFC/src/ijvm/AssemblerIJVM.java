@@ -191,4 +191,66 @@ public class AssemblerIJVM {
         }
         return true;
     }
+    
+    //insere os valores iniciais do mapeamento de memoria conforme aula 15 grrr
+    public ArrayList<String> inicializacaoInstrucoesAula15(ArrayList<String> instr) {
+        ArrayList<String> init = new ArrayList<>();
+        //Q bytes 20+P
+        String q = Integer.toBinaryString(instr.size()+20);
+        if (q.length()<=8) {
+            init.add(q);
+            init.add("00000000");
+            init.add("00000000");
+            init.add("00000000");
+        }
+        else if (q.length()<=16){
+            init.add(q.substring(8));
+            init.add(q.substring(0, q.length()-8));
+            init.add("00000000");
+            init.add("00000000");
+        }
+        else if (q.length()<=24){
+            init.add(q.substring(8));
+            init.add(q.substring(8, 16));
+            init.add(q.substring(0, q.length()-16));
+            init.add("00000000");
+        }
+        else {
+            init.add(q.substring(8));
+            init.add(q.substring(8, 16));
+            init.add(q.substring(16, 25));
+            init.add(q.substring(0, q.length()-24));
+        }
+        //inicializacao 20 bytes
+        init.add("00000000");
+        init.add(Integer.toBinaryString(Integer.parseInt("73", 16)));
+        init.add("00000000");
+        init.add("00000000");
+        //cpp=6
+        init.add("00000110");
+        init.add("00000000");
+        init.add("00000000");
+        init.add("00000000");
+        //lv=4097
+        init.add("00000001");
+        init.add("00010000");//0x10 0001 0000
+        init.add("00000000");
+        init.add("00000000");
+        //pc=1024
+        init.add("00000000");
+        init.add("00000100");//0x04 0000 0100
+        init.add("00000000");
+        init.add("00000000");
+        //sp=4099
+        init.add("00000011");//0x03
+        init.add("00010000");//0x10
+        init.add("00000000");
+        init.add("00000000");
+        //programa P bytes
+        instr.forEach((t) -> {
+            init.add(t);
+        });
+        
+        return init;
+    }
 }

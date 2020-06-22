@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import mic1.arqcomp.ufc.Mic1ArqCompUFC;
 
 /**
  *
@@ -134,5 +135,29 @@ public class ManipulaArq {
             }
         }
         return list;
+    }
+    //ler tipo de arquivo conforme aula 15
+    public ArrayList<String> lerArquivoAula15(String nomeArq){
+        arqtmp = new ArrayList<>();
+        try(FileReader arq = new FileReader(nomeArq)) {
+            BufferedReader lerArq = new BufferedReader(arq);
+            String qbyte = "";
+            String linha = lerArq.readLine();
+            while(linha != null){
+                qbyte=qbyte+linha;
+                linha = lerArq.readLine();
+            }
+            qbyte=qbyte.substring(32);//descarta qbyte
+            arqtmp.add(qbyte.substring(0, 160));//byte 0 ao 19-init
+            for(int i=20;i<1025;i++){
+                arqtmp.add("00000000");
+            }
+            arqtmp.add(qbyte.substring(160));
+            return arqtmp;
+        } catch (IOException e) {
+            System.err.printf("Erro na abertura do arquivo: %s.\n",
+            e.getMessage());
+        }
+        return null;
     }
 }
